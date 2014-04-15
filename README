@@ -1,0 +1,39 @@
+Streamy - A text to Core MIDI converter part of the band 'netcat''s codebase
+Learn more at https://github.com/usrbinnc/
+Written by Brandon Lucia & David Balatero - 2012 - 2014ish
+---------------------------------------
+
+Streamy is a program that takes text input and generates Core MIDI messages.
+To build Streamy, you should be able to just type 'make'.
+
+Streamy reads lines from the standard input and produces no output on the
+console.  Streamy expects output that is formatted like the output of MIDIShark
+(https://github.com/usrbinnc/midishark).  We expect Streamy to mostly be used
+with MIDIShark.
+
+To run Streamy, type
+
+$>midishark capture | midishark format | Streamy <number of MIDI instruments>
+
+
+Input Format
+-----------
+A line of input for Streamy has 4 fields
+<instrument> <velocity> <duration> <tones>
+
+<instrument> is the MIDI bus that Streamy sends a command to
+<velocity> is the velocity of the MIDI command
+<duration> is the time (in ms) between when Streamy sends a 'note on' command
+           and a 'note off' command
+<tones> is a comma separated list of MIDI tone numbers (from, e.g., here:
+        http://www.phys.unsw.edu.au/jw/notes.html)
+
+Configuring MIDI
+----------------
+You can route Streamy's MIDI events in a MIDI performance rack program, like
+MainStage.  To route them, you should create a virtual MIDI port for each
+instrument on the OSX IAC Driver.  Once they are created, Streamy will talk to
+them by number -- the first port in the list is 0, the second is 1, and so on.
+Configured IAC ports will show up as MIDI sources in your MIDI rack program.
+You can assign a port to drive an instrument and when Streamy sends messages to
+that port it will play that instrument.
